@@ -20,8 +20,11 @@ The main script is `imp_tsp.py`. The length of TSP signal (samples) and sampling
   * [-d TSP_DIRECTION]
   * [-e TSP_EVALUATION]
 
-For example, when the length of TSP signal is 65536 samples and the sampling frequency is 48kHz, run  
+For example, when the length of TSP signal is 65536 samples and the sampling frequency is 48kHz, run:  
 `python imp_tsp.py -l 65536 -f 48000`
+
+To specify the output channel and the number of input channels, add "-o" and "-i" arguments:  
+`python imp_tsp.py -l 65536 -f 48000 -o 2 -i 4`
 
 If you want to check audio device information, run  
 `python audio_io_view.py`
