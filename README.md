@@ -4,6 +4,8 @@ imp_tsp.py
 A python CLI script for measuring an impulse response with time-stretched pulse (TSP) signal.
 [pyaudio](https://people.csail.mit.edu/hubert/pyaudio/), [numpy](http://www.numpy.org/), and [matplotlib](http://matplotlib.org/) are required.
 
+Output file format is 64bit binary. `imp_fsXXXX_chXX.bin`
+
 ## Usage
 The main script is `imp_tsp.py`. The length of TSP signal (samples) and sampling frequency (Hz) must be specified.
 * python imp_tsp.py
