@@ -1,4 +1,6 @@
-# Overview
+imp_tsp.py
+====
+## Description
 A python CLI script for measuring an impulse response with time-stretched pulse (TSP) signal.
 [pyaudio](https://people.csail.mit.edu/hubert/pyaudio/), [numpy](http://www.numpy.org/), and [matplotlib](http://matplotlib.org/) are required.
 
