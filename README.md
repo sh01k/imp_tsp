@@ -24,7 +24,7 @@ For example, when the length of TSP signal is 65536 samples and the sampling fre
 If you want to check audio device information, run  
 `python audio_io_view.py`
 
-## Requirement
+## Requirements
 - [pyaudio](https://people.csail.mit.edu/hubert/pyaudio/)
 - [numpy](http://www.numpy.org/)
 - [matplotlib](http://matplotlib.org/)
