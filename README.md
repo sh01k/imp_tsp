@@ -17,7 +17,7 @@ A python CLI script for measuring an impulse response with time-stretched pulse 
   * [-d TSP_DIRECTION]
   * [-e TSP_EVALUATION]
 
-If you want to check audio device information, run
+If you want to check audio device information, run  
 `python audio_io_view.py`
 
 ## References
