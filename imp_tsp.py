@@ -170,12 +170,22 @@ for i in np.arange(nsync):
 tsp_out = (tsp_data_sync.T).reshape((tsp_len*(nsync+1)*nchannel,1))
 
 # Open stream
-stream = pa.open(format=pyaudio.paInt16,
-                channels=nchannel,
-                rate=Fs,
-                input=True,
-                output=True,
-                frames_per_buffer=chunk)
+if dev_id<0:
+    stream = pa.open(format=pyaudio.paInt16,
+                    channels=nchannel,
+                    rate=Fs,
+                    input=True,
+                    output=True,
+                    frames_per_buffer=chunk)
+else:
+    stream = pa.open(format=pyaudio.paInt16,
+                    channels=nchannel,
+                    rate=Fs,
+                    input=True,
+                    output=True,
+                    input_device_index=dev_id,
+                    output_device_index=dev_id,
+                    frames_per_buffer=chunk)
 
 nframe = int(np.ceil(tsp_len*(nsync+1)/chunk)) #number of frames
 
