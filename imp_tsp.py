@@ -53,7 +53,7 @@ else:
     out_channel = 1
 
 # Number of channels for measurement
-if args.input!=None and args.output[0]<=0:
+if args.input!=None and args.input[0]<=0:
     print "Invalid argument for input"
     sys.exit()
 elif args.input!=None:
