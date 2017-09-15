@@ -14,9 +14,9 @@ First, the class file is imported in your python script:
 from imptsp import imptsp
 ```
 
-Initialize for the sampling frequency of 4.8kHz and TSP length of 65536 samples:
+Initialize for the sampling frequency of 4.8kHz, TSP length of 65536 samples, and 2 channels:
 ```
-imp = imptsp(48000, 65536)
+imp = imptsp(48000, 65536, 2)
 ```
 
 Measure the impulse response for input channel \#1 and \#2 and output channel \#1:
