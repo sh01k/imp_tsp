@@ -1,35 +1,44 @@
-imp_tsp.py
+imptsp.py
 ====
 ## Description
-A python CLI script for measuring an impulse response with time-stretched pulse (TSP) signal.
+A python class for measuring an impulse response with time-stretched pulse (TSP) signal.
 [pyaudio](https://people.csail.mit.edu/hubert/pyaudio/), [numpy](http://www.numpy.org/), and [matplotlib](http://matplotlib.org/) are required.
 
-Output file format is 64bit binary. `imp_fsXXXX_chXX.bin`
+In example.py, the output file is written in MATLAB/Octave format using [scipy.io](https://docs.scipy.org/doc/scipy/reference/io.html). `imp_fsXXXX_chXX.mat`
 
 ## Usage
-The main script is `imp_tsp.py`. The length of TSP signal (samples) and sampling frequency (Hz) must be specified.
-* python imp_tsp.py
-  * [-h]
-  * -l TSP_LENGTH
-  * -f SAMPLING_FREQUENCY
-  * [-o OUTPUT_CHANNEL]
-  * [-i NUMBER_OF_INPUT_CHANNELS]
-  * [-p PLOT_FIGURE_FLAG]
-  * [-c PLOT_CHANNEL_NUMBER]
-  * [-s NUMBER_OF_SYNCRONOUS_ADDITION]
-  * [-w OUTPUT_WAVEFILE_FLAG]
-  * [-a AUDIO_DEVICE_INDEX]
-  * [-d TSP_DIRECTION]
-  * [-e TSP_EVALUATION]
+The main class file is `imptsp.py`. The sampling frequency (Hz) and length of TSP signal (samples) must be specified. Please refer to `example.py` for the usage.
 
-For example, when the length of TSP signal is 65536 samples and the sampling frequency is 48kHz, run  
-`python imp_tsp.py -l 65536 -f 48000`
+First, the class file is imported in your python script:
+`from imptsp import imptsp`
 
-To specify the output channel and the number of input channels, add "-o" and "-i" arguments:  
-`python imp_tsp.py -l 65536 -f 48000 -o 2 -i 4`
+Initialize for the sampling frequency of 4.8kHz and TSP length of 65536 samples:
+`imp = imptsp(48000, 65536)`
 
-If you want to check audio device information, run  
-`python audio_io_view.py`
+Measure the impulse response for input channel \#1 and \#2 and output channel \#1:
+`(ir,tsp) = imp.get_imp([1,2],1)`
+The impulse response data is in `ir` and the recorded TSP signal is in `tsp` for debugging.
+
+Terminate:
+`imp.terminate()`
+
+If you want to check audio device information, run
+`python check_audio_dev.py`
+
+The other configuration for initialization is as follows:
+* imptsp(Fs,tsp_len,nchannel,dev_id,dbg_ch,flg_fig,flg_dump,nsync,flg_ud,flg_eval)
+  * Fs: sampling frequency
+  * tsp_len: TSP length
+  * nchannel: number of channels
+  * dev_id: index of audio device
+  * dbg_ch: channel number for debug
+  * flg_fig:plot figure flag
+  * flg_dump: output wavefile flag
+  * nsync: number of synchronous additions
+  * flg_ud: TSP up or down (0 or 1)
+  * flg_eval: TSP evaluation flag
+  * in_channel: list of input channels
+  * out_channel: channel number for output
 
 ## Requirements
 - [pyaudio](https://people.csail.mit.edu/hubert/pyaudio/)
