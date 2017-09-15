@@ -206,11 +206,11 @@ class imptsp:
 
         self.tsp_out = (tsp_data_sync.T).reshape((self.tsp_len*(self.nsync+1)*self.nchannel,1))
 
-        self.nframe = int(np.ceil(self.tsp_len*(self.nsync+1)/self.chunk)) #number of frames
+        nframe = int(np.ceil(self.tsp_len*(self.nsync+1)/self.chunk)) #number of frames
 
         self.ifrm = 0
         self.stream.start_stream()
-        while self.ifrm<self.nframe:
+        while self.ifrm<nframe:
             pass
         self.stream.stop_stream()
 
