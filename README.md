@@ -47,8 +47,6 @@ The other configuration for initialization is as follows:
   * nsync: number of synchronous additions
   * flg_ud: TSP up or down (0 or 1)
   * flg_eval: TSP evaluation flag
-  * in_channel: list of input channels
-  * out_channel: channel number for output
 
 ## Requirements
 - [pyaudio](https://people.csail.mit.edu/hubert/pyaudio/)
