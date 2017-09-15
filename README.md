@@ -7,7 +7,7 @@ A python class for measuring an impulse response with time-stretched pulse (TSP)
 In `example.py`, the output file is written in MATLAB/Octave format using [scipy.io](https://docs.scipy.org/doc/scipy/reference/io.html). `imp_fsXXXX_chXX.mat`
 
 ## Usage
-The main class file is `imptsp.py`. The sampling frequency (Hz) and length of TSP signal (samples) must be specified. Please refer to `example.py` for the usage.
+The main class file is `imptsp.py`. The sampling frequency (Hz) and length of TSP signal (samples) must be specified. Please also refer to `example.py` for the usage.
 
 First, the class file is imported in your python script:
 ```
@@ -23,7 +23,7 @@ Measure the impulse response for input channel \#1 and \#2 and output channel \#
 ```
 (ir,tsp) = imp.get_imp([1,2],1)
 ```
-The impulse response data is in `ir` and the recorded TSP signal is in `tsp` for debugging.
+The impulse response data is stored in `ir` and the recorded TSP signal is stored in `tsp` for debugging.
 
 Terminate:
 ```
@@ -57,7 +57,7 @@ The other configuration for initialization is as follows:
 - [scipy](https://www.scipy.org/) (optional)
 
 ## References
-- [Y. Suzuki, et al. "An optimum computer‐generated pulse signal suitable for the measurement of very long impulse responses," .J. Acoust. Soc. Am., vol. 97, no. 2, pp. 1119-1123, 1995.](http://scitation.aip.org/content/asa/journal/jasa/97/2/10.1121/1.412224)
+- [Y. Suzuki, *et al*. "An optimum computer‐generated pulse signal suitable for the measurement of very long impulse responses," *J. Acoust. Soc. Am.*, vol. 97, no. 2, pp. 1119-1123, 1995.](http://scitation.aip.org/content/asa/journal/jasa/97/2/10.1121/1.412224)
 
 ## License
 [MIT](https://github.com/sh01k/imp_tsp/blob/master/LICENSE)
