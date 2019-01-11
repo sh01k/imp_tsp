@@ -14,7 +14,7 @@ First, the class file is imported in your python script:
 from imptsp import imptsp
 ```
 
-Initialize for the sampling frequency of 4.8kHz, TSP length of 65536 samples, and 2 channels:
+Initialize for the sampling frequency of 48kHz, TSP length of 65536 samples, and 2 channels:
 ```
 imp = imptsp(48000, 65536, 2)
 ```
