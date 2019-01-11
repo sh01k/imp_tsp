@@ -1,7 +1,7 @@
 imptsp.py
 ====
 ## Description
-A python class for measuring an impulse response with time-stretched pulse (TSP) a.k.a swept-sine signal.
+A python class for measuring an impulse response with time-stretched pulse (TSP a.k.a. swept-sine) signal.
 [pyaudio](https://people.csail.mit.edu/hubert/pyaudio/), [numpy](http://www.numpy.org/), and [matplotlib](http://matplotlib.org/) are required.
 
 In `example.py`, the output file is written in MATLAB/Octave format using [scipy.io](https://docs.scipy.org/doc/scipy/reference/io.html). `imp_fsXXXX_chXX.mat`
