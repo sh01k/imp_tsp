@@ -6,21 +6,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class imptsp:
-    def __init__(self,_Fs,_tsp_len,_nchannel=1,_dev_id=-1,_dbg_ch=1,_flg_fig=0,_flg_dump=0,_nsync=3,_flg_ud=1,_flg_eval=0):
+    def __init__(self,Fs,tsp_len,nchannel=1,dev_id=-1,dbg_ch=1,flg_fig=0,flg_dump=0,nsync=3,flg_ud=1,flg_eval=0):
         self.chunk = 512 #length of chunk for pyaudio
         self.max_amp = 8191 #32767 #maximum amplitude for output
         self.format = pyaudio.paInt16 #format
 
-        self.Fs = _Fs #sampling frequency
-        self.tsp_len = _tsp_len #TSP length
-        self.nchannel = _nchannel #number of channels
-        self.dev_id = _dev_id #index of audio device
-        self.dbg_ch = _dbg_ch-1 #channel number for debug
-        self.flg_fig = _flg_fig #plot figure flag
-        self.flg_dump = _flg_dump #output wavefile flag
-        self.nsync = _nsync #number of synchronous additions
-        self.flg_ud = _flg_ud #TSP up or down
-        self.flg_eval = _flg_eval #TSP evaluation flag
+        self.Fs = Fs #sampling frequency
+        self.tsp_len = tsp_len #TSP length
+        self.nchannel = nchannel #number of channels
+        self.dev_id = dev_id #index of audio device
+        self.dbg_ch = dbg_ch-1 #channel number for debug
+        self.flg_fig = flg_fig #plot figure flag
+        self.flg_dump = flg_dump #output wavefile flag
+        self.nsync = nsync #number of synchronous additions
+        self.flg_ud = flg_ud #TSP up or down
+        self.flg_eval = flg_eval #TSP evaluation flag
 
         self.fftlen = self.tsp_len # FFT length
         self.stft_len = 256 #STFT length
@@ -175,19 +175,18 @@ class imptsp:
         print("  - Fs: sampling frequency\n  - tsp_len: TSP length\n  - nchannel: number of channels\n  - dev_id: index of audio device\n  - dbg_ch: channel number for debug\n  - flg_fig:plot figure flag\n  - flg_dump: output wavefile flag\n  - nsync: number of synchronous additions\n  - flg_ud: TSP up or down (0 or 1)\n  - flg_eval: TSP evaluation flag\n  - in_channel: list of input channels\n  - out_channel: channel number for output")
         return 0
 
-    def get_imp(self,_in_channel,_out_channel):
-        n_in_channel = len(_in_channel)
+    def get_imp(self,in_channel,out_channel):
+        n_in_channel = len(in_channel)
 
-        in_channel = []
         for i in range(n_in_channel):
-            if _in_channel[i]-1 not in np.arange(self.nchannel):
+            if in_channel[i]-1 not in np.arange(self.nchannel):
                 print("Invalid channel number of input")
                 self.usage()
                 return 1
             else:
-                in_channel.append(_in_channel[i]-1)
+                in_channel[i] = in_channel[i]-1
 
-        out_channel = _out_channel-1 #channel number of output
+        out_channel = out_channel-1 #channel number of output
 
         if out_channel >= self.nchannel | out_channel < 0:
             print("Invalid channel number of output")
@@ -257,17 +256,17 @@ class imptsp:
             plt.ylabel("Frequency [Hz]")
 
             plt.figure()
-            plt.plot(tsp_rcv_sig[in_channel.index(self.dbg_ch)][:])
+            plt.plot(tsp_rcv_sig[in_channel[self.dbg_ch-1]][:])
 
             #plt.figure()
             #plt.plot(tsp_rcv_sum[in_channel.index(self.dbg_ch)][:])
 
             plt.figure()
-            plt.plot(imp[in_channel.index(self.dbg_ch)][:])
+            plt.plot(imp[in_channel[self.dbg_ch-1]][:])
 
             plt.show()
 
-        return (imp, tsp_rcv_sig[in_channel.index(self.dbg_ch)][:])
+        return (imp, tsp_rcv_sig[in_channel[self.dbg_ch-1]][:])
 
     def terminate(self):
         self.stream.close()
@@ -296,9 +295,9 @@ class imptsp:
         itsp_spec = np.zeros(self.tsp_len, dtype=complex)
 
         tsp_spec[0] = 1
-        tsp_spec[self.tsp_len/2] = np.exp(float(self.flg_ud*2-1)*1j*float(M)*np.pi)
+        tsp_spec[int(self.tsp_len/2)] = np.exp(float(self.flg_ud*2-1)*1j*float(M)*np.pi)
         itsp_spec[0] = 1.0/tsp_spec[0]
-        itsp_spec[self.tsp_len/2] = 1.0/tsp_spec[self.tsp_len/2]
+        itsp_spec[int(self.tsp_len/2)] = 1.0/tsp_spec[int(self.tsp_len/2)]
 
         for i in range(1,int(self.tsp_len/2)):
             tsp_spec[i] = np.exp(float(self.flg_ud*2-1)*1j*4*float(M)*np.pi*(float(i-1)**2)/(float(self.tsp_len)**2))
