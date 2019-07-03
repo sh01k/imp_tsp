@@ -8,7 +8,7 @@ from imptsp import imptsp
 Fs = 48000
 tsp_len = 65536
 
-in_channel = [1]
+in_channel = [1,2]
 out_channel = 1
 n_in_channel = len(in_channel)
 

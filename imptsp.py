@@ -256,17 +256,17 @@ class imptsp:
             plt.ylabel("Frequency [Hz]")
 
             plt.figure()
-            plt.plot(tsp_rcv_sig[in_channel[self.dbg_ch-1],:])
+            plt.plot(tsp_rcv_sig[in_channel[self.dbg_ch],:])
 
             #plt.figure()
-            #plt.plot(tsp_rcv_sum[in_channel[self.dbg_ch-1],:])
+            #plt.plot(tsp_rcv_sum[in_channel[self.dbg_ch],:])
 
             plt.figure()
-            plt.plot(imp[in_channel[self.dbg_ch-1],:])
+            plt.plot(imp[in_channel[self.dbg_ch],:])
 
             plt.show()
 
-        return (imp, tsp_rcv_sig[in_channel[self.dbg_ch-1],:])
+        return (imp, tsp_rcv_sig[in_channel[self.dbg_ch],:])
 
     def terminate(self):
         self.stream.close()
@@ -350,7 +350,7 @@ class imptsp:
 
 if __name__== '__main__':
     # Parameters
-    in_channel = [1]
+    in_channel = [1,2]
     out_channel = 1
 
     # Initialize
