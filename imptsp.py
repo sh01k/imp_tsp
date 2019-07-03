@@ -201,7 +201,7 @@ class imptsp:
         # Output data of TSP signal
         tsp_data_sync = np.zeros((self.nchannel,self.tsp_len*(self.nsync+1)), dtype=self.format_np)
         for i in range(self.nsync):
-            tsp_data_sync[out_channel][i*self.tsp_len:(i+1)*self.tsp_len] = self.tsp_data
+            tsp_data_sync[out_channel,i*self.tsp_len:(i+1)*self.tsp_len] = self.tsp_data
 
         self.tsp_out = (tsp_data_sync.T).reshape((self.tsp_len*(self.nsync+1)*self.nchannel,1))
 
@@ -228,7 +228,7 @@ class imptsp:
             amp_av = 0.0
             for j in range(self.tsp_len*(self.nsync+1)):
                 amp_av = amp_av + (tsp_rcv_data[j*self.nchannel+in_channel[i]].astype(np.float64))**2/(self.tsp_len*(self.nsync+1))
-                tsp_rcv_sig[i][j] = tsp_rcv_data[j*self.nchannel+in_channel[i]].astype(np.float64)/float(self.max_amp)
+                tsp_rcv_sig[i,j] = tsp_rcv_data[j*self.nchannel+in_channel[i]].astype(np.float64)/float(self.max_amp)
             if amp_av<1.0:
                 print("Amplitude of channel #%d is too small" % (in_channel[i]+1))
 
@@ -236,37 +236,37 @@ class imptsp:
         tsp_rcv_sum = np.zeros((n_in_channel,self.tsp_len), dtype=np.float64)
         for i in range(n_in_channel):
             for j in range(self.nsync+1):
-                tsp_rcv_sum[i][:] = tsp_rcv_sum[i][:] + tsp_rcv_sig[i][j*self.tsp_len:(j+1)*self.tsp_len]/float(self.nsync)
+                tsp_rcv_sum[i,:] = tsp_rcv_sum[i,:] + tsp_rcv_sig[i,j*self.tsp_len:(j+1)*self.tsp_len]/float(self.nsync)
 
         # Calculate impulse response
         imp = np.zeros((n_in_channel,self.fftlen),dtype=np.float64)
         for i in range(n_in_channel):
-            imp_spec = np.fft.fft(tsp_rcv_sum[i][:],self.fftlen)*np.fft.fft(self.itsp_sig,self.fftlen)
-            imp[i][:] = (np.fft.ifft(imp_spec,self.fftlen)).real
+            imp_spec = np.fft.fft(tsp_rcv_sum[i,:],self.fftlen)*np.fft.fft(self.itsp_sig,self.fftlen)
+            imp[i,:] = (np.fft.ifft(imp_spec,self.fftlen)).real
 
         # Draw figures
         if self.flg_fig:
             #plt.figure()
-            #plt.plot(tsp_data_sync[out_channel][:])
+            #plt.plot(tsp_data_sync[out_channel,:])
 
             plt.figure()
-            pxx, stft_freq, stft_bins, stft_time = plt.specgram(tsp_rcv_sig[in_channel.index(self.dbg_ch)][:], NFFT=self.stft_len, Fs=self.Fs, window=self.stft_win, noverlap=self.stft_overlap)
+            pxx, stft_freq, stft_bins, stft_time = plt.specgram(tsp_rcv_sig[in_channel[self.dbg_ch],:], NFFT=self.stft_len, Fs=self.Fs, window=self.stft_win, noverlap=self.stft_overlap)
             plt.axis([0, self.tsp_len*(self.nsync+1)/self.Fs, 0, self.Fs/2])
             plt.xlabel("Time [s]")
             plt.ylabel("Frequency [Hz]")
 
             plt.figure()
-            plt.plot(tsp_rcv_sig[in_channel[self.dbg_ch-1]][:])
+            plt.plot(tsp_rcv_sig[in_channel[self.dbg_ch-1],:])
 
             #plt.figure()
-            #plt.plot(tsp_rcv_sum[in_channel.index(self.dbg_ch)][:])
+            #plt.plot(tsp_rcv_sum[in_channel[self.dbg_ch-1],:])
 
             plt.figure()
-            plt.plot(imp[in_channel[self.dbg_ch-1]][:])
+            plt.plot(imp[in_channel[self.dbg_ch-1],:])
 
             plt.show()
 
-        return (imp, tsp_rcv_sig[in_channel[self.dbg_ch-1]][:])
+        return (imp, tsp_rcv_sig[in_channel[self.dbg_ch-1],:])
 
     def terminate(self):
         self.stream.close()
@@ -350,14 +350,11 @@ class imptsp:
 
 if __name__== '__main__':
     # Parameters
-    Fs = 48000
-    tsp_len = 65536
-
     in_channel = [1]
     out_channel = 1
 
     # Initialize
-    imp = imptsp(Fs,tsp_len)
+    imp = imptsp(Fs=48000,tsp_len=65536)
 
     # Measuring impulse response
     (ir,tsp) = imp.get_imp(in_channel,out_channel)

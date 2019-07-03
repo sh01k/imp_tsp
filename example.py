@@ -29,7 +29,7 @@ plt.xlabel("Time [s]")
 plt.ylabel("Frequency [Hz]")
 
 plt.figure()
-plt.plot(ir[0][:])
+plt.plot(ir[0,:])
 
 plt.show()
 
